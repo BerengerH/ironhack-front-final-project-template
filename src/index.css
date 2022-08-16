@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+/* Some personal utilities */
+body{
+    background-color: #F9F7F7;
+    font-family: 'Roboto', sans-serif;
+}
+
+.bg-light-beige{
+    background-color: #F9F7F7;
+}
+
+.bg-light-blue{
+    background-color: #DBE2EF;
+}
+
+.bg-medium-blue{
+    background-color: #3F72AF;
+}
+
+.bg-dark-blue{
+    background-color: #112D4E;
+}
