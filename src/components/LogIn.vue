@@ -2,8 +2,8 @@
   <div
     class="flex flex-col justify-center md:justify-start my-auto pt-6 md:pt-0 px-8 md:px-24 lg:px-32"
   >
-    <p class="text-center text-3xl">Welcome to Website</p>
-    <form class="flex flex-col pt-3 md:pt-8">
+    <p class="text-center text-3xl">Welcome to TaskManager</p>
+    <form @submit.prevent="accountLogIn" class="flex flex-col pt-3 md:pt-8">
       <div class="flex flex-col pt-4">
         <label for="email" class="text-lg">Email</label>
         <input
@@ -38,7 +38,6 @@
         type="submit"
         value="Log In"
         class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-2 mt-8"
-        @click="accountLogIn"
       />
     </form>
   </div>
@@ -52,7 +51,6 @@ export default {
   setup() {
     const user = useUserStore();
     return { user };
-    s;
   },
   data() {
     return {
@@ -63,12 +61,13 @@ export default {
     };
   },
   methods: {
-    accountLogIn() {
+    async accountLogIn() {
       try {
-        this.user.signIn(this.email, this.password);
+        await this.user.signIn(this.email, this.password);
+        this.$router.push("/");
       } catch (e) {
         this.error = true;
-        this.errorMessage = 'The email or password is incorrect.'
+        this.errorMessage = "The email or password is incorrect.";
         console.log(e.message);
       }
     },

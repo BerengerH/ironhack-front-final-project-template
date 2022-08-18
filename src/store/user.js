@@ -24,11 +24,13 @@ export const useUserStore = defineStore("user", {
     },
     
     // Hacer sign in
-    async signIn(){
+    async signIn(email, password){
       const { user, session, error } = await supabase.auth.signIn({
         email: email,
         password: password,
       })
+      if (error) throw error;
+      if (user) this.user = user;
     },
 
     // Hacer log out
