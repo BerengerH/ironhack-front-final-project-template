@@ -15,7 +15,18 @@ export const useTaskStore = defineStore("tasks", {
         .order("id", { ascending: false });
       this.tasks = tasks;
     },
+
     // Hacer POST
+    async implementTask(taskTitle, UserId) {
+      try {
+        const { data, error } = await supabase
+          .from("tasks")
+          .insert([{ title: taskTitle, user_id: UserId }]);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
     // Hacer el PUT (edit)
     // Hacer el delete
     // Hacer el PUT (cambiar entre completada y pendiente)

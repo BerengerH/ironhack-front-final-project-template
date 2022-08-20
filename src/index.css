@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 
-/* Some personal utilities */
+/* Some personal utility classes */
 body{
     background-color: #F9F7F7;
     font-family: 'Roboto', sans-serif;
