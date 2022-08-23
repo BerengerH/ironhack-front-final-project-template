@@ -2,11 +2,11 @@
   <div>
     <LogOut />
     <div class="mx-auto my-16 flex justify-center gap-3">
-      <h2>All your taks</h2>
+      <h2>All your tasks</h2>
       <img src="" alt="Tasks logo" />
     </div>
     <section>
-      <AddTask/>  
+      <AddTask />
       <div class="my-16 mx-[5%]">
         <table class="table-auto border w-full">
           <thead>
@@ -19,10 +19,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="border p-3">The title of the task</td>
+            <tr v-if="allTasks" v-for="allTask in allTasks">
+              <td class="border p-3">{{allTask.title}}</td>
               <td class="border p-3"><img src="" alt="Edit logo" /></td>
-              <td class="border p-3">The status of the task</td>
+              <td v-if="allTask.is_complete" class="border p-3">Completed</td>
+              <td v-else class="border p-3">In progress</td>
               <td class="border p-3"><img src="" alt="Edit logo" /></td>
               <td class="border p-3"><img src="" alt="Delete logo" /></td>
             </tr>
@@ -41,26 +42,30 @@ import AddTask from "../components/AddTask.vue";
 export default {
   name: "Dashboard",
   setup() {
-    const tasks = useTaskStore();
+    const taskStore = useTaskStore();
     const getTasks = async () => {
       try {
-        await this.tasks.fetchTasks();
-        console.log(this.tasks);
+        await taskStore.fetchTasks();
+        console.log(taskStore.tasks);
       } catch (e) {
-        console.log("No responde", e.message);
+        console.log("Function getTasks had issue fetching data from fetchTasks", e.message);
       }
     };
-    return { getTasks, tasks };
+    return { getTasks, taskStore };
   },
   data() {
-    return {};
+    return {
+      allTasks: null,
+    };
   },
   components: {
     LogOut,
     AddTask,
   },
-  mounted() {
-    this.getTasks();
+  async mounted() {
+    await this.getTasks();
+    this.allTasks = this.taskStore.tasks;
+    console.log(this.allTasks);
   },
 };
 </script>

@@ -8,15 +8,17 @@ export const useTaskStore = defineStore("tasks", {
     tasks: null,
   }),
   actions: {
+
+    // Fetch the data from the API
     async fetchTasks() {
       const { data: tasks } = await supabase
         .from("tasks")
-        .select("*")
+        .select()
         .order("id", { ascending: false });
       this.tasks = tasks;
     },
 
-    // Hacer POST
+    // Add data to the API (POST)
     async implementTask(taskTitle, UserId) {
       try {
         const { data, error } = await supabase
@@ -27,8 +29,8 @@ export const useTaskStore = defineStore("tasks", {
       }
     },
 
-    // Hacer el PUT (edit)
-    // Hacer el delete
-    // Hacer el PUT (cambiar entre completada y pendiente)
+    // Edit the title data of the API (PUT)
+    // Remove data from the API
+    // Edit the status (completed or in progress) data of the API (PUT)
   },
 });
