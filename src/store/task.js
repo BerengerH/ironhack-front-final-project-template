@@ -30,7 +30,30 @@ export const useTaskStore = defineStore("tasks", {
     },
 
     // Edit the title data of the API (PUT)
-    // Remove data from the API
+    async editTitle (currentTitle, editedTitle) {
+      try{
+        const { data, error } = await supabase
+        .from('tasks')
+        .update({ title: currentTitle })
+        .match({ name: editedTitle })
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
     // Edit the status (completed or in progress) data of the API (PUT)
+
+
+    // Remove data from the API
+    async deleteTask (taskId) {
+      try{
+        const { data, error } = await supabase
+        .from('tasks')
+        .delete()
+        .match({ id: taskId })
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
   },
 });
