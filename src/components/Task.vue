@@ -11,19 +11,41 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(allTask, index) in allTasks" class="text-center">
-          <td class="border p-2 text-left">{{ allTask.title }}</td>
+        <tr
+          v-for="(task, index) in taskStore.tasks"
+          class="text-center"
+          :key="index"
+        >
+          <EditTask
+            v-if="toggleEditTask"
+            :toggleTaskPopUp="toggleTaskPopUp"
+            :currentTitle="this.currentTitle"
+          />
+          <td class="border p-2 text-left">{{ task.title }}</td>
           <td class="border p-2 w-12">
-            <img src="../assets/edit-icon.svg" alt="Edit logo" />
+            <img
+              class="w-6 lg:w-8 cursor-pointer"
+              src="../assets/edit-icon.svg"
+              alt="Edit logo"
+              @click="
+                getCurrentTitle(index);
+                toggleTaskPopUp();
+              "
+            />
           </td>
-          <td v-if="allTask.is_complete" class="border p-2">Completed</td>
+          <td v-if="task.is_complete" class="border p-2">Completed</td>
           <td v-else class="border p-2">In progress</td>
           <td class="border p-2 w-12">
-            <img src="../assets/edit-icon.svg" alt="Edit logo" />
+            <img
+              class="w-6 lg:w-8 cursor-pointer"
+              src="../assets/edit-icon.svg"
+              alt="Edit logo"
+            />
           </td>
           <td class="border p-2 w-12">
             <img
               @click="trash(index)"
+              class="w-4 lg:w-6 cursor-pointer"
               src="../assets/trash-icon.svg"
               alt="Delete logo"
             />
@@ -36,37 +58,49 @@
 
 <script>
 import { useTaskStore } from "../store/task";
+import EditTask from "./EditTask.vue";
 
 export default {
   name: "Task",
   data() {
     return {
-      allTasks: null,
-      editedTitle: "",
       currentTitle: "",
       currentTaskId: "",
+      toggleEditTask: false,
+      toggleEditStatus: false,
     };
   },
-  components: {},
+  components: { EditTask },
   methods: {
-    editTask() {
-      this.currentTitle = this.allTasks[index].title;
-      //define the const Edited title (using v-model?)
-      this.taskStore.editTitle(this.currentTitle, this.editedTitle);
+    //Method to toggle popup
+    toggleTaskPopUp() {
+      this.toggleEditTask = !this.toggleEditTask;
+      console.log(this.toggleEditTask);
     },
-    trash(index) {
-      this.currentTaskId = this.allTasks[index].id;
-      this.taskStore.deleteTask(this.currentTaskId);
-                      this.$router.go();
+    toggleStatusPopUp() {
+      this.toggleEditStatus = !this.toggleEditStatus;
+    },
 
+    //Method to edit the task title
+    getCurrentTitle(index) {
+      this.currentTitle = this.taskStore.tasks[index].title;
+      console.log(this.currentTitle);
+    },
+
+    //Method to delete a task
+    async trash(index) {
+      this.currentTaskId = this.taskStore.tasks[index].id;
+      await this.taskStore.deleteTask(this.currentTaskId);
+      this.getTasks();
     },
   },
   setup() {
     const taskStore = useTaskStore();
+
+    //Getting all tasks from the API - function called in created()
     const getTasks = async () => {
       try {
         await taskStore.fetchTasks();
-        console.log(taskStore.tasks);
       } catch (e) {
         console.log(
           "Function getTasks had issue fetching data from fetchTasks",
@@ -78,8 +112,7 @@ export default {
   },
   async created() {
     await this.getTasks();
-    this.allTasks = this.taskStore.tasks;
-    console.log(this.allTasks);
+    console.log(this.taskStore.tasks);
   },
 };
 </script>

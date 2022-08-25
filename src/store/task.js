@@ -16,6 +16,7 @@ export const useTaskStore = defineStore("tasks", {
         .select()
         .order("id", { ascending: false });
       this.tasks = tasks;
+      console.log(this.tasks);
     },
 
     // Add data to the API (POST)
@@ -24,6 +25,7 @@ export const useTaskStore = defineStore("tasks", {
         const { data, error } = await supabase
           .from("tasks")
           .insert([{ title: taskTitle, user_id: UserId }]);
+          this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }

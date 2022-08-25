@@ -37,10 +37,10 @@ export default {
     };
   },
   methods: {
-    addTask() {
+    async addTask() {
       const userId = this.user.user.id;
       console.log(userId);
-      this.tasks.implementTask(this.newTitle, userId);
+      await this.tasks.implementTask(this.newTitle, userId);
       this.newTitle = "";
     },
   },
