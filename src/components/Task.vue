@@ -1,7 +1,7 @@
 <template>
   <div class="my-16 mx-[5%]">
-    <table class="table-auto border w-full">
-      <thead>
+    <table class=" w-full">
+      <thead class="bg-light-blue">
         <tr>
           <th class="border p-2">Task</th>
           <th class="border p-2">Edit task</th>
@@ -102,7 +102,6 @@ export default {
     //Method to delete a task
     async trash() {
       await this.taskStore.deleteTask(this.currentTaskId);
-      this.getTasks();
     },
   },
   setup() {

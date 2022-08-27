@@ -37,6 +37,7 @@ export const useTaskStore = defineStore("tasks", {
           .from("tasks")
           .update({ title: editedTitle })
           .match({ id: taskId });
+          this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }
@@ -49,6 +50,7 @@ export const useTaskStore = defineStore("tasks", {
           .from("tasks")
           .update({ is_complete: editedStatus })
           .match({ id: taskId });
+          this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }
@@ -61,6 +63,7 @@ export const useTaskStore = defineStore("tasks", {
           .from("tasks")
           .delete()
           .match({ id: taskId });
+          this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }

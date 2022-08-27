@@ -59,7 +59,6 @@ export default {
       await this.getEditedStatus();
       await this.taskStore.editStatus(el, this.editedStatus);
       togglePopUp;
-      this.getTasks();
       this.editedStatus = "";
     },
 
@@ -74,22 +73,7 @@ export default {
   setup() {
     const taskStore = useTaskStore();
 
-    //Getting all tasks from the API - function called in created()
-    const getTasks = async () => {
-      try {
-        await taskStore.fetchTasks();
-      } catch (e) {
-        console.log(
-          "Function getTasks had issue fetching data from fetchTasks",
-          e.message
-        );
-      }
-    };
-    return { getTasks, taskStore };
-  },
-  async created() {
-    await this.getTasks();
-    console.log(this.taskStore.tasks);
+    return { taskStore };
   },
 };
 </script>
