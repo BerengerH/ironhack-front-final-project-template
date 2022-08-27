@@ -17,6 +17,11 @@
           :toggleTaskPopUp="toggleTaskPopUp"
           :currentTaskId="this.currentTaskId"
         />
+        <EditTaskStatus
+          v-if="toggleEditStatus"
+          :toggleStatusPopUp="toggleStatusPopUp"
+          :currentTaskId="this.currentTaskId"
+        />
         <tr
           v-for="(task, index) in taskStore.tasks"
           class="text-center"
@@ -41,11 +46,18 @@
               class="w-6 lg:w-8 cursor-pointer"
               src="../assets/edit-icon.svg"
               alt="Edit logo"
+              @click="
+                getCurrentId(index);
+                toggleStatusPopUp();
+              "
             />
           </td>
           <td class="border p-2 w-12">
             <img
-              @click="getCurrentId(index); trash()"
+              @click="
+                getCurrentId(index);
+                trash();
+              "
               class="w-4 lg:w-6 cursor-pointer"
               src="../assets/trash-icon.svg"
               alt="Delete logo"
@@ -60,6 +72,7 @@
 <script>
 import { useTaskStore } from "../store/task";
 import EditTask from "./EditTask.vue";
+import EditTaskStatus from "./EditTaskStatus.vue";
 
 export default {
   name: "Task",
@@ -71,7 +84,7 @@ export default {
       toggleEditStatus: false,
     };
   },
-  components: { EditTask },
+  components: { EditTask, EditTaskStatus },
   methods: {
     //Method to toggle popup
     toggleTaskPopUp() {
@@ -83,7 +96,7 @@ export default {
 
     //Method to get the task id
     getCurrentId(index) {
-    this.currentTaskId = this.taskStore.tasks[index].id;
+      this.currentTaskId = this.taskStore.tasks[index].id;
     },
 
     //Method to delete a task
