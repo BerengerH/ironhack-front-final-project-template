@@ -7,6 +7,7 @@
       id="edit-task"
       placeholder="Write the new task description"
       class="p-2 w-[90%] border border-solid border-black"
+      @keyup.enter="editTask(currentTaskId, toggleTaskPopUp())"
     />
     <div class="flex gap-4 justify-center m-4">
       <button

@@ -30,7 +30,7 @@
           <td class="border p-2 text-left">{{ task.title }}</td>
           <td class="border p-2 w-12">
             <img
-              class="w-6 lg:w-8 cursor-pointer"
+              class="w-6 lg:w-8 cursor-pointer m-auto"
               src="../assets/edit-icon.svg"
               alt="Edit logo"
               @click="
@@ -43,7 +43,7 @@
           <td v-else class="border p-2">In progress</td>
           <td class="border p-2 w-12">
             <img
-              class="w-6 lg:w-8 cursor-pointer"
+              class="w-6 lg:w-8 cursor-pointer m-auto"
               src="../assets/edit-icon.svg"
               alt="Edit logo"
               @click="
@@ -58,7 +58,7 @@
                 getCurrentId(index);
                 trash();
               "
-              class="w-4 lg:w-6 cursor-pointer"
+              class="w-4 lg:w-6 cursor-pointer m-auto"
               src="../assets/trash-icon.svg"
               alt="Delete logo"
             />

@@ -1,8 +1,8 @@
 <template>
     <nav class="flex items-center justify-between flex-wrap bg-medium-blue p-6 sticky w-full z-10 top-0">
-        <div class="flex items-center flex-shrink-0 text-white mr-6">
+        <div class="flex items-center flex-shrink-0 text-white">
             <a class="text-white no-underline hover:text-white hover:no-underline" href="/">
-                <span class="text-2xl pl-2"><i class="em em-grinning"></i> TaskManager</span>
+                <img class="w-20" src="../assets/brand-logo-transparent.png" alt="Brand Logo">
             </a>
         </div>
 

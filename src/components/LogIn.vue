@@ -2,7 +2,10 @@
   <div
     class="flex flex-col justify-center md:justify-start my-auto pt-6 md:pt-0 px-8 md:px-24 lg:px-32"
   >
-    <p class="text-center text-3xl">Welcome to TaskManager</p>
+  <div class="flex flex-col items-center gap-16 lg:gap-20">
+        <img class="w-20" src="../assets/brand-logo.png" alt="Brand Logo">
+        <p class="text-center text-3xl">Welcome to TaskManager</p>
+  </div>
     <form @submit.prevent="accountLogIn" class="flex flex-col pt-3 md:pt-8">
       <div class="flex flex-col pt-4">
         <label for="email" class="text-lg">Email</label>

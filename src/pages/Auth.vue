@@ -34,7 +34,7 @@ export default {
   name: "Auth",
   data() {
     return {
-      haveAccount: false,
+      haveAccount: true,
     };
   },
   components: {

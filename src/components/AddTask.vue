@@ -8,6 +8,7 @@
         id="new-task"
         placeholder="Enter your task"
         class="w-[90%]"
+        @keyup.enter="addTask"
       />
       <button
         class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-1 px-3"
