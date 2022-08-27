@@ -10,17 +10,18 @@
           <th class="border p-2">Delete</th>
         </tr>
       </thead>
+
       <tbody>
+        <EditTask
+          v-if="toggleEditTask"
+          :toggleTaskPopUp="toggleTaskPopUp"
+          :currentTaskId="this.currentTaskId"
+        />
         <tr
           v-for="(task, index) in taskStore.tasks"
           class="text-center"
           :key="index"
         >
-          <EditTask
-            v-if="toggleEditTask"
-            :toggleTaskPopUp="toggleTaskPopUp"
-            :currentTitle="this.currentTitle"
-          />
           <td class="border p-2 text-left">{{ task.title }}</td>
           <td class="border p-2 w-12">
             <img
@@ -28,7 +29,7 @@
               src="../assets/edit-icon.svg"
               alt="Edit logo"
               @click="
-                getCurrentTitle(index);
+                getCurrentId(index);
                 toggleTaskPopUp();
               "
             />
@@ -44,7 +45,7 @@
           </td>
           <td class="border p-2 w-12">
             <img
-              @click="trash(index)"
+              @click="getCurrentId(index); trash()"
               class="w-4 lg:w-6 cursor-pointer"
               src="../assets/trash-icon.svg"
               alt="Delete logo"
@@ -75,21 +76,18 @@ export default {
     //Method to toggle popup
     toggleTaskPopUp() {
       this.toggleEditTask = !this.toggleEditTask;
-      console.log(this.toggleEditTask);
     },
     toggleStatusPopUp() {
       this.toggleEditStatus = !this.toggleEditStatus;
     },
 
-    //Method to edit the task title
-    getCurrentTitle(index) {
-      this.currentTitle = this.taskStore.tasks[index].title;
-      console.log(this.currentTitle);
+    //Method to get the task id
+    getCurrentId(index) {
+    this.currentTaskId = this.taskStore.tasks[index].id;
     },
 
     //Method to delete a task
-    async trash(index) {
-      this.currentTaskId = this.taskStore.tasks[index].id;
+    async trash() {
       await this.taskStore.deleteTask(this.currentTaskId);
       this.getTasks();
     },

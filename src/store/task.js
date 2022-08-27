@@ -8,7 +8,6 @@ export const useTaskStore = defineStore("tasks", {
     tasks: null,
   }),
   actions: {
-
     // Fetch the data from the API
     async fetchTasks() {
       const { data: tasks } = await supabase
@@ -25,19 +24,20 @@ export const useTaskStore = defineStore("tasks", {
         const { data, error } = await supabase
           .from("tasks")
           .insert([{ title: taskTitle, user_id: UserId }]);
-          this.fetchTasks();
+        this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }
     },
 
     // Edit the title data of the API (PUT)
-    async editTitle (currentTitle, editedTitle) {
-      try{
+    async editTitle(taskId, editedTitle) {
+      try {
+        console.log(taskId, editedTitle);
         const { data, error } = await supabase
-        .from('tasks')
-        .update({ title: currentTitle })
-        .match({ name: editedTitle })
+          .from("tasks")
+          .update({ title: editedTitle })
+          .match({ id: taskId });
       } catch (error) {
         console.log(error.message);
       }
@@ -45,14 +45,13 @@ export const useTaskStore = defineStore("tasks", {
 
     // Edit the status (completed or in progress) data of the API (PUT)
 
-
     // Remove data from the API
-    async deleteTask (taskId) {
-      try{
+    async deleteTask(taskId) {
+      try {
         const { data, error } = await supabase
-        .from('tasks')
-        .delete()
-        .match({ id: taskId })
+          .from("tasks")
+          .delete()
+          .match({ id: taskId });
       } catch (error) {
         console.log(error.message);
       }
