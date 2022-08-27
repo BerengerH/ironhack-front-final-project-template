@@ -1,17 +1,17 @@
 <template>
   <div class="my-16 mx-[5%]">
-    <table class=" w-full">
+    <table class="w-full">
       <thead class="bg-light-blue">
         <tr>
-          <th class="border p-2">Task</th>
-          <th class="border p-2">Edit task</th>
-          <th class="border p-2">Status</th>
-          <th class="border p-2">Edit status</th>
-          <th class="border p-2">Delete</th>
+          <th class="border border-black p-2">Task</th>
+          <th class="border border-black p-2">Edit task</th>
+          <th class="border border-black p-2">Status</th>
+          <th class="border border-black p-2">Edit status</th>
+          <th class="border border-black p-2">Delete</th>
         </tr>
       </thead>
 
-      <tbody>
+      <tbody class="border border-black">
         <EditTask
           v-if="toggleEditTask"
           :toggleTaskPopUp="toggleTaskPopUp"
@@ -27,8 +27,8 @@
           class="text-center"
           :key="index"
         >
-          <td class="border p-2 text-left">{{ task.title }}</td>
-          <td class="border p-2 w-12">
+          <td class="border border border-gray-400 p-2 text-left">{{ task.title }}</td>
+          <td class="border border border-gray-400 p-2 w-12">
             <img
               class="w-6 lg:w-8 cursor-pointer m-auto"
               src="../assets/edit-icon.svg"
@@ -39,9 +39,9 @@
               "
             />
           </td>
-          <td v-if="task.is_complete" class="border p-2">Completed</td>
-          <td v-else class="border p-2">In progress</td>
-          <td class="border p-2 w-12">
+          <td v-if="task.is_complete" class="border border border-gray-400 p-2">Completed</td>
+          <td v-else class="border border border-gray-400 p-2">In progress</td>
+          <td class="border border border-gray-400 p-2 w-12">
             <img
               class="w-6 lg:w-8 cursor-pointer m-auto"
               src="../assets/edit-icon.svg"
@@ -52,7 +52,7 @@
               "
             />
           </td>
-          <td class="border p-2 w-12">
+          <td class="border border border-gray-400 p-2 w-12">
             <img
               @click="
                 getCurrentId(index);
