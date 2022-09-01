@@ -6,6 +6,7 @@ import { supabase } from "../supabase";
 export const useTaskStore = defineStore("tasks", {
   state: () => ({
     tasks: null,
+    filteredTasks: null,
   }),
   actions: {
     // Fetch the data from the API
@@ -15,7 +16,7 @@ export const useTaskStore = defineStore("tasks", {
         .select()
         .order("id", { ascending: false });
       this.tasks = tasks;
-      console.log(this.tasks);
+      this.filteredTasks = tasks;
     },
 
     // Add data to the API (POST)
@@ -37,7 +38,7 @@ export const useTaskStore = defineStore("tasks", {
           .from("tasks")
           .update({ title: editedTitle })
           .match({ id: taskId });
-          this.fetchTasks();
+        this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }
@@ -48,9 +49,9 @@ export const useTaskStore = defineStore("tasks", {
       try {
         const { data, error } = await supabase
           .from("tasks")
-          .update({ is_complete: editedStatus })
+          .update({ status: editedStatus })
           .match({ id: taskId });
-          this.fetchTasks();
+        this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }
@@ -63,7 +64,7 @@ export const useTaskStore = defineStore("tasks", {
           .from("tasks")
           .delete()
           .match({ id: taskId });
-          this.fetchTasks();
+        this.fetchTasks();
       } catch (error) {
         console.log(error.message);
       }

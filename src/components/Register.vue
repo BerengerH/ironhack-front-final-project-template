@@ -4,13 +4,13 @@
     class="flex flex-col justify-center md:justify-start my-auto pt-6 md:pt-0 px-8 md:px-24 lg:px-32"
   >
     <p class="text-center text-3xl">Join Us</p>
-    <form @submit="accountRegistration" class="flex flex-col pt-3">
+    <form @submit.prevent="accountRegistration" class="flex flex-col pt-3">
       <div class="flex flex-col pt-4">
-        <label for="name" class="text-lg">Name</label>
+        <label for="userName" class="text-lg">User name</label>
         <input
           type="text"
-          id="name"
-          placeholder="John Smith"
+          id="userName"
+          placeholder="Enter a user name"
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mt-1 leading-tight focus:outline-none focus:shadow-outline"
         />
       </div>
@@ -101,7 +101,8 @@ export default {
     };
   },
   methods: {
-    accountRegistration() {
+    async accountRegistration() {
+      
       if (this.email !== this.confirmedEmail) {
         this.error = true;
         this.errorMessage =
@@ -110,8 +111,12 @@ export default {
         this.error = true;
         this.errorMessage =
           'The password in the "confirm password" is different.';
+      } else if (!this.user.signUp) {
+        this.error = true;
+        this.errorMessage =
+          'The password in the "confirm password" is different.';
       } else {
-        this.user.signUp(this.email, this.password);
+         await this.user.signUp(this.email, this.password);
         this.confirmation = true;
         this.confirmationMessage =
           "Just one more step, got to your email to confirm it!";

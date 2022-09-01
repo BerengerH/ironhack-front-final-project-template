@@ -1,16 +1,30 @@
 <template>
   <div class="sticky bg-white flex flex-col items-center w-full">
-    <fieldset class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4">
+    <fieldset
+      class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4"
+    >
       <div class="flex gap-2">
         <input
           v-model="editedStatus"
           type="radio"
-          id="in-progress"
+          id="open"
           name="status"
-          value="in-progress"
+          value="open"
           @keyup.enter="editStatus(currentTaskId, toggleStatusPopUp())"
         />
-        <label for="in-progress">In progress</label>
+        <label for="open">Open</label>
+      </div>
+
+      <div class="flex gap-2">
+        <input
+          v-model="editedStatus"
+          type="radio"
+          id="pending"
+          name="status"
+          value="pending"
+          @keyup.enter="editStatus(currentTaskId, toggleStatusPopUp())"
+        />
+        <label for="pending">Pending</label>
       </div>
 
       <div class="flex gap-2">
@@ -64,9 +78,11 @@ export default {
 
     getEditedStatus() {
       if (this.editedStatus === "completed") {
-        this.editedStatus = "true";
-      } else if (this.editedStatus === "in-progress") {
-        this.editedStatus = "false";
+        this.editedStatus = "completed";
+      } else if (this.editedStatus === "pending") {
+        this.editedStatus = "pending";
+      } else if (this.editedStatus === "open") {
+        this.editedStatus = "open";
       }
     },
   },
