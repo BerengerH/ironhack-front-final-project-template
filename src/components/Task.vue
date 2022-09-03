@@ -1,6 +1,7 @@
 <template>
   <div class="my-16 mx-[5%]">
     <fieldset
+      @click="filteredTasks"
       class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4"
     >
       <div class="flex gap-2">
@@ -70,7 +71,7 @@
           :currentTaskId="this.currentTaskId"
         />
         <tr
-          v-for="(filteredTask, index) in filteredTasks"
+          v-for="(filteredTask, index) in this.taskStore.filteredTasks"
           class="text-center"
           :key="index"
         >
@@ -150,7 +151,7 @@ export default {
       filterSelection: "all",
     };
   },
-  components: { EditTask, EditTaskStatus, },
+  components: { EditTask, EditTaskStatus },
   methods: {
     //Method to toggle popup
     toggleTaskPopUp() {
@@ -170,21 +171,15 @@ export default {
       await this.taskStore.deleteTask(this.currentTaskId);
     },
 
-    filteredStatus(){
-      console.log(this.taskStore.filteredTasks);
-    }
-    
-  },
-
-  computed: {
-  //Function to filter tasks
-    filteredTasks() {
+    //Function to filter tasks
+    async filteredTasks() {
+      await this.getTasks();
       if (this.filterSelection !== "all") {
-        return this.taskStore.filteredTasks.filter(
+        this.taskStore.filteredTasks = this.taskStore.tasks.filter(
           (filteredTask) => filteredTask.status === this.filterSelection
         );
       } else {
-        return this.taskStore.filteredTasks;
+        this.taskStore.filteredTasks = this.taskStore.tasks;
       }
     },
   },
@@ -207,7 +202,7 @@ export default {
   },
   async created() {
     await this.getTasks();
-    console.log(this.taskStore.filteredTasks);
+    this.filteredTasks();
   },
 };
 </script>

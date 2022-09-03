@@ -70,21 +70,12 @@ export default {
   },
   methods: {
     async editStatus(el, togglePopUp) {
-      await this.getEditedStatus();
+      await this.getEditedStatus;
       await this.taskStore.editStatus(el, this.editedStatus);
       togglePopUp;
       this.editedStatus = "";
     },
 
-    getEditedStatus() {
-      if (this.editedStatus === "completed") {
-        this.editedStatus = "completed";
-      } else if (this.editedStatus === "pending") {
-        this.editedStatus = "pending";
-      } else if (this.editedStatus === "open") {
-        this.editedStatus = "open";
-      }
-    },
   },
   setup() {
     const taskStore = useTaskStore();
