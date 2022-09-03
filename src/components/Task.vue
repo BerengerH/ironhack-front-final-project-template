@@ -147,10 +147,10 @@ export default {
       currentTaskId: "",
       toggleEditTask: false,
       toggleEditStatus: false,
-      filterSelection: "",
+      filterSelection: "all",
     };
   },
-  components: { EditTask, EditTaskStatus },
+  components: { EditTask, EditTaskStatus, },
   methods: {
     //Method to toggle popup
     toggleTaskPopUp() {
@@ -169,22 +169,19 @@ export default {
     async trash() {
       await this.taskStore.deleteTask(this.currentTaskId);
     },
+
+    filteredStatus(){
+      console.log(this.taskStore.filteredTasks);
+    }
+    
   },
 
   computed: {
-    //Function to filter tasks
+  //Function to filter tasks
     filteredTasks() {
-      if (this.filterSelection === "open") {
+      if (this.filterSelection !== "all") {
         return this.taskStore.filteredTasks.filter(
-          (filteredTask) => filteredTask.status === "open"
-        );
-      } else if (this.filterSelection === "pending") {
-        return this.taskStore.filteredTasks.filter(
-          (filteredTask) => filteredTask.status === "pending"
-        );
-      } else if (this.filterSelection === "completed") {
-        return this.taskStore.filteredTasks.filter(
-          (filteredTask) => filteredTask.status === "completed"
+          (filteredTask) => filteredTask.status === this.filterSelection
         );
       } else {
         return this.taskStore.filteredTasks;
