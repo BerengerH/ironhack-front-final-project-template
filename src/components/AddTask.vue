@@ -8,7 +8,7 @@
           type="text"
           id="new-task"
           placeholder="Enter your task"
-          class="w-full"
+          class="w-full border border-gray-400 p-2"
         />
         <input
           type="submit"
@@ -23,13 +23,11 @@
 <script>
 import { useTaskStore } from "../store/task";
 import { useUserStore } from "../store/user";
-
 export default {
   name: "AddTask",
   setup() {
     const tasks = useTaskStore();
     const user = useUserStore();
-
     return { tasks, user };
   },
   data() {

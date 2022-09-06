@@ -1,15 +1,14 @@
 <template>
   <div>
     <form
-      @submit.prevent="editTask(currentTaskId, toggleTaskPopUp())"
+      @submit.prevent="editDeadline(currentTaskId, toggleDeadlinePopUp())"
       class="sticky bg-white flex flex-col items-center w-full"
     >
-      <label for="edit-task" class="p-5">Edit your task</label>
+      <label for="edit-deadline" class="p-5">Change the deadline</label>
       <input
-        v-model="editedTitle"
-        type="text"
-        id="edit-task"
-        placeholder="Write the new task description"
+        v-model="editedDeadline"
+        type="date"
+        id="edit-deadline"
         class="p-2 w-[90%] border border-solid border-black"
       />
       <div class="flex gap-4 justify-center m-4">
@@ -20,7 +19,7 @@
         />
         <button
           class="bg-black text-white font-bold text-lg hover:bg-gray-700 p-1 px-3"
-          @click="toggleTaskPopUp"
+          @click="toggleDeadlinePopUp"
         >
           Cancel
         </button>
@@ -31,23 +30,26 @@
 
 <script>
 import { useTaskStore } from "../store/task";
+
 export default {
-  name: "EditTask",
-  props: ["toggleTaskPopUp", "currentTaskId"],
+  name: "EditDeadline",
+  props: ["toggleDeadlinePopUp", "currentTaskId"],
   data() {
     return {
-      editedTitle: "",
+      editedDeadline: null ,
     };
   },
   methods: {
-    async editTask(el, togglePopUp) {
-      await this.taskStore.editTitle(el, this.editedTitle);
+    async editDeadline(el, togglePopUp) {
+      await this.taskStore.editDeadline(el, this.editedDeadline);
       togglePopUp;
-      this.editedTitle = "";
+      this.editedDeadline = null ;
     },
+
   },
   setup() {
     const taskStore = useTaskStore();
+
     return { taskStore };
   },
 };

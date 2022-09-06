@@ -16,8 +16,8 @@ export const useTaskStore = defineStore("tasks", {
         .select()
         .order("id", { ascending: false });
       this.tasks = tasks;
-/*       this.filteredTasks = tasks;
- */    },
+      this.filteredTasks = tasks;
+    },
 
     // Add data to the API (POST)
     async implementTask(taskTitle, UserId) {
@@ -50,6 +50,19 @@ export const useTaskStore = defineStore("tasks", {
         const { data, error } = await supabase
           .from("tasks")
           .update({ status: editedStatus })
+          .match({ id: taskId });
+        this.fetchTasks();
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+
+    // Edit the title data of the API (PUT)
+    async editDeadline(taskId, editedDeadline) {
+      try {
+        const { data, error } = await supabase
+          .from("tasks")
+          .update({ deadline: editedDeadline })
           .match({ id: taskId });
         this.fetchTasks();
       } catch (error) {

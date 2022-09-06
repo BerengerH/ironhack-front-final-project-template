@@ -2,8 +2,11 @@
   <div class="my-16 mx-[5%]">
     <fieldset
       @click="filteredTasks"
-      class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4"
+      class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4 mb-8 border border-black"
     >
+      <legend class="mx-auto mb-4 font-bold">
+        Filter the tasks you want to see
+      </legend>
       <div class="flex gap-2">
         <input
           v-model="filterSelection"
@@ -48,90 +51,80 @@
         <label for="all-filter">All</label>
       </div>
     </fieldset>
-    <table class="w-full">
-      <thead class="bg-light-blue">
-        <tr>
-          <th class="border border-black p-2">Task</th>
-          <th class="border border-black p-2">Edit task</th>
-          <th class="border border-black p-2">Status</th>
-          <th class="border border-black p-2">Edit status</th>
-          <th class="border border-black p-2">Delete</th>
-        </tr>
-      </thead>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-light-blue">
+          <tr>
+            <th class="border border-black p-2">Task</th>
+            <th class="border border-black p-2">Status</th>
+            <th class="border border-black p-2">Deadline</th>
+            <th class="border border-black p-2">Delete</th>
+          </tr>
+        </thead>
 
-      <tbody class="border border-black">
-        <EditTask
-          v-if="toggleEditTask"
-          :toggleTaskPopUp="toggleTaskPopUp"
-          :currentTaskId="this.currentTaskId"
-        />
-        <EditTaskStatus
-          v-if="toggleEditStatus"
-          :toggleStatusPopUp="toggleStatusPopUp"
-          :currentTaskId="this.currentTaskId"
-        />
-        <tr
-          v-for="(filteredTask, index) in this.taskStore.filteredTasks"
-          class="text-center"
-          :key="index"
-        >
-          <td class="border border-gray-400 p-2 text-left">
-            {{ filteredTask.title }}
-          </td>
-          <td class="border border-gray-400 p-2 w-12">
-            <img
-              class="w-6 lg:w-8 cursor-pointer m-auto"
-              src="../assets/edit-icon.svg"
-              alt="Edit logo"
+        <tbody class="border border-black">
+          <EditTask
+            v-if="toggleEditTask"
+            :toggleTaskPopUp="toggleTaskPopUp"
+            :currentTaskId="this.currentTaskId"
+          />
+          <EditTaskStatus
+            v-if="toggleEditStatus"
+            :toggleStatusPopUp="toggleStatusPopUp"
+            :currentTaskId="this.currentTaskId"
+          />
+          <EditDeadline
+            v-if="toggleEditDeadline"
+            :toggleDeadlinePopUp="toggleDeadlinePopUp"
+            :currentTaskId="this.currentTaskId"
+          />
+          <tr
+            v-for="(filteredTask, index) in this.taskStore.filteredTasks"
+            class="text-center"
+            :key="index"
+          >
+            <td
+              class="border border-gray-400 p-2 text-left cursor-pointer"
               @click="
                 getCurrentId(filteredTask.id);
                 toggleTaskPopUp();
               "
-            />
-          </td>
-          <td
-            v-if="filteredTask.status === 'open'"
-            class="border border-gray-400 p-2"
-          >
-            Open
-          </td>
-          <td
-            v-else-if="filteredTask.status === 'pending'"
-            class="border border-gray-400 p-2"
-          >
-            Pending
-          </td>
-          <td
-            v-else-if="filteredTask.status === 'completed'"
-            class="border border-gray-400 p-2"
-          >
-            Completed
-          </td>
-          <td class="border border-gray-400 p-2 w-12">
-            <img
-              class="w-6 lg:w-8 cursor-pointer m-auto"
-              src="../assets/edit-icon.svg"
-              alt="Edit logo"
+            >
+              {{ filteredTask.title }}
+            </td>
+            <td
+              class="border border-gray-400 p-2 cursor-pointer"
               @click="
                 getCurrentId(filteredTask.id);
                 toggleStatusPopUp();
               "
-            />
-          </td>
-          <td class="border border-gray-400 p-2 w-12">
-            <img
+            >
+              {{ filteredTask.status }}
+            </td>
+            <td
+              class="border border-gray-400 p-2 cursor-pointer"
               @click="
                 getCurrentId(filteredTask.id);
-                trash();
+                toggleDeadlinePopUp();
               "
-              class="w-4 lg:w-6 cursor-pointer m-auto"
-              src="../assets/trash-icon.svg"
-              alt="Delete logo"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            >
+              {{ filteredTask.deadline }}
+            </td>
+            <td class="border border-gray-400 p-2 w-12">
+              <img
+                @click="
+                  getCurrentId(filteredTask.id);
+                  trash();
+                "
+                class="w-4 lg:w-6 cursor-pointer m-auto"
+                src="../assets/trash-icon.svg"
+                alt="Delete logo"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -139,7 +132,7 @@
 import { useTaskStore } from "../store/task";
 import EditTask from "./EditTask.vue";
 import EditTaskStatus from "./EditTaskStatus.vue";
-
+import EditDeadline from "./EditDeadline.vue";
 export default {
   name: "Task",
   data() {
@@ -148,10 +141,11 @@ export default {
       currentTaskId: "",
       toggleEditTask: false,
       toggleEditStatus: false,
+      toggleEditDeadline: false,
       filterSelection: "all",
     };
   },
-  components: { EditTask, EditTaskStatus },
+  components: { EditTask, EditTaskStatus, EditDeadline },
   methods: {
     //Method to toggle popup
     toggleTaskPopUp() {
@@ -161,16 +155,18 @@ export default {
       this.toggleEditStatus = !this.toggleEditStatus;
     },
 
+    toggleDeadlinePopUp() {
+      this.toggleEditDeadline = !this.toggleEditDeadline;
+    },
+
     //Method to get the task id
     getCurrentId(value) {
       this.currentTaskId = value;
     },
-
     //Method to delete a task
     async trash() {
       await this.taskStore.deleteTask(this.currentTaskId);
     },
-
     //Function to filter tasks
     async filteredTasks() {
       await this.getTasks();
@@ -183,10 +179,8 @@ export default {
       }
     },
   },
-
   setup() {
     const taskStore = useTaskStore();
-
     //Getting all tasks from the API - function called in created()
     const getTasks = async () => {
       try {

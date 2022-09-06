@@ -70,7 +70,6 @@ export default {
   },
   methods: {
     async editStatus(el, togglePopUp) {
-      await this.getEditedStatus;
       await this.taskStore.editStatus(el, this.editedStatus);
       togglePopUp;
       this.editedStatus = "";
