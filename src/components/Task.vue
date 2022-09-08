@@ -1,8 +1,8 @@
 <template>
-  <div class="my-16 mx-[5%]">
+  <div class="my-16 mx-[5%] bg-white p-6">
     <fieldset
       @click="filteredTasks"
-      class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4 mb-8 border border-black"
+      class="flex flex-wrap md:gap-16 sm:gap-8 gap-4 justify-center m-4 mb-8 border border-black w-full mx-auto pb-3"
     >
       <legend class="mx-auto mb-4 font-bold">
         Filter the tasks you want to see

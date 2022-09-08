@@ -3,7 +3,8 @@
     <section v-if="haveAccount" class="my-4 md:my-10 w-full md:w-1/2">
       <LogIn />
       <div class="text-center pt-6 pb-6">
-        <button @click="toogleRegisterLogin" class="underline">
+        <span> Not registered yet?</span>
+        <button @click="toogleRegisterLogin" class="underline font-bold ml-2">
           Create an accout
         </button>
       </div>
@@ -11,8 +12,9 @@
     <section v-else class="my-4 md:my-10 w-full md:w-1/2">
       <Register />
       <div class="text-center pt-6 pb-6">
-        <button @click="toogleRegisterLogin" class="underline">
-          I already have an account
+        <span>Already have an account?</span>
+        <button @click="toogleRegisterLogin" class="underline font-bold ml-2">
+          Login here
         </button>
       </div>
     </section>

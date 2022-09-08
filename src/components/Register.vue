@@ -75,7 +75,7 @@
     </form>
   </div>
   <div v-else>
-    <p class="text-center text-3xl">{{ this.confirmationMessage }}</p>
+    <p class="text-center text-3xl p-4">{{ this.confirmationMessage }}</p>
   </div>
 </template>
 
@@ -100,26 +100,39 @@ export default {
       confirmationMessage: "",
     };
   },
+
   methods: {
     async accountRegistration() {
-      
-      if (this.email !== this.confirmedEmail) {
+      const mailFormat = /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/gm;
+      const passwordRegex =
+        /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{8,}$/;
+
+      if (!this.email.match(mailFormat)) {
+        this.error = true;
+        this.errorMessage = "Please, enter a valid email address";
+      } else if (this.email !== this.confirmedEmail) {
         this.error = true;
         this.errorMessage =
           "Make sure your email is matching the previous input.";
+      } else if (!this.password.match(passwordRegex)) {
+        this.error = true;
+        this.errorMessage =
+          "The password should be at least 8 characters long, have 1 digit, 1 uppercase, 1 lowercase and 1 special symbol.";
       } else if (this.password !== this.confirmedPassword) {
         this.error = true;
         this.errorMessage =
           'The password in the "confirm password" is different.';
-      } else if (!this.user.signUp) {
-        this.error = true;
-        this.errorMessage =
-          'The password in the "confirm password" is different.';
       } else {
-         await this.user.signUp(this.email, this.password);
-        this.confirmation = true;
-        this.confirmationMessage =
-          "Just one more step, got to your email to confirm it!";
+        try {
+          await this.user.signUp(this.email, this.password);
+          this.confirmation = true;
+          this.confirmationMessage =
+            "Just one more step, got to your email to confirm it!";
+        } catch (e) {
+          this.error = true;
+          this.errorMessage = e.message;
+          console.log(e.message);
+        }
       }
     },
   },
