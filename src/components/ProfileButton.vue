@@ -1,9 +1,9 @@
 <template>
   <button
     class="inline-block py-2 px-4 text-white no-underline"
-    @click="accountLogOut"
+    @click="loadProfile"
   >
-    Log Out
+    Profile
   </button>
   <div
     v-if="error"
@@ -15,13 +15,8 @@
 </template>
 
 <script>
-import { useUserStore } from "../store/user";
 export default {
-  name: "LogOut",
-  setup() {
-    const user = useUserStore();
-    return { user };
-  },
+  name: "ProfileButton",
   data() {
     return {
       error: false,
@@ -29,10 +24,9 @@ export default {
     };
   },
   methods: {
-    async accountLogOut() {
+    async loadProfile() {
       try {
-        await this.user.signOut();
-        this.$router.push({ path: "/auth" });
+        this.$router.push({ path: "/profile" });
       } catch (e) {
         this.error = true;
         this.errorMessage = "Something wrong happened.";

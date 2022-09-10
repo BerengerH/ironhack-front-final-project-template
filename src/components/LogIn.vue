@@ -70,8 +70,7 @@ export default {
         this.$router.push("/");
       } catch (e) {
         this.error = true;
-        this.errorMessage = "The email or password is incorrect.";
-        console.log(e.message);
+        this.errorMessage = e.message;
       }
     },
   },

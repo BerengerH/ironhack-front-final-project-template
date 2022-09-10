@@ -8,6 +8,7 @@
       <div class="flex flex-col pt-4">
         <label for="userName" class="text-lg">User name</label>
         <input
+          v-model="username"
           type="text"
           id="userName"
           placeholder="Enter a user name"
@@ -90,6 +91,7 @@ export default {
   },
   data() {
     return {
+      username: "",
       email: "",
       confirmedEmail: "",
       password: "",
@@ -107,7 +109,9 @@ export default {
       const passwordRegex =
         /^(?!.*\s)(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[~`!@#$%^&*()--+={}\[\]|\\:;"'<>,.?/_₹]).{8,}$/;
 
-      if (!this.email.match(mailFormat)) {
+      if (this.username === "") {
+        this.errorMessage = "Please, enter a username";
+      } else if (!this.email.match(mailFormat)) {
         this.error = true;
         this.errorMessage = "Please, enter a valid email address";
       } else if (this.email !== this.confirmedEmail) {
@@ -124,10 +128,9 @@ export default {
           'The password in the "confirm password" is different.';
       } else {
         try {
-          await this.user.signUp(this.email, this.password);
+          await this.user.signUp(this.email, this.password, this.username);
           this.confirmation = true;
-          this.confirmationMessage =
-            "Just one more step, got to your email to confirm it!";
+          this.confirmationMessage = `Just one more step, got to: ${this.email} and confirm your email!`;
         } catch (e) {
           this.error = true;
           this.errorMessage = e.message;

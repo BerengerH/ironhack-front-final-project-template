@@ -186,10 +186,7 @@ export default {
       try {
         await taskStore.fetchTasks();
       } catch (e) {
-        console.log(
-          "Function getTasks had issue fetching data from fetchTasks",
-          e.message
-        );
+        console.log(e.message);
       }
     };
     return { getTasks, taskStore };

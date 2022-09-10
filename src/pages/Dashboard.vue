@@ -1,6 +1,6 @@
 <template>
   <div>
-    <LogOut />
+    <Navbar />
     <section>
       <AddTask />
       <Task/>
@@ -9,15 +9,13 @@
 </template>
 
 <script>
-import LogOut from "../components/LogOut.vue";
+import Navbar from "../components/Navbar.vue";
 import AddTask from "../components/AddTask.vue";
 import Task from "../components/Task.vue";
-
-
 export default {
   name: "Dashboard",
   components: {
-    LogOut,
+    Navbar,
     AddTask,
     Task
   },
