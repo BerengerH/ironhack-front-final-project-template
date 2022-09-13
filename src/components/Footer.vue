@@ -1,6 +1,6 @@
 <template>
   <footer class="fixed bottom-0 w-full bg-medium-blue text-center">
-    <div class="text-white text-center text-sm p-7">
+    <div class="text-white text-center text-sm sm:p-7 p-4">
       © 2022 Copyright:
       <a
         class="text-white font-medium"

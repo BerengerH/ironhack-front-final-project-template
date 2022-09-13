@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex items-center justify-between flex-wrap bg-medium-blue p-6 sticky w-full z-10 top-0"
+    class="flex items-center justify-between flex-wrap bg-medium-blue sm:p-5 p-3 sticky w-full z-10 top-0"
   >
     <div class="flex items-center flex-shrink-0 text-white">
       <a
@@ -15,10 +15,14 @@
       </a>
     </div>
     <div>
-      <ul class="list-reset lg:flex justify-end flex-1 items-center">
-        <li class="mr-3">
+      <ul class="list-reset flex justify-end flex-1 items-center">
+        <li>
           <ProfileButton />
+        </li>
+        <li>
           <TasksButton />
+        </li>
+        <li>
           <LogOut />
         </li>
       </ul>

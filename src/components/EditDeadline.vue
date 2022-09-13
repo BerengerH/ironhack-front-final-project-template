@@ -2,7 +2,7 @@
   <div>
     <form
       @submit.prevent="editDeadline(currentTaskId, toggleDeadlinePopUp()), filterSelectionAll()"
-      class="sticky bg-white flex flex-col items-center w-full"
+      class="bg-white flex flex-col items-center"
     >
       <label for="edit-deadline" class="p-5">Change the deadline</label>
       <input
@@ -30,7 +30,6 @@
 
 <script>
 import { useTaskStore } from "../store/task";
-
 export default {
   name: "EditDeadline",
   props: ["toggleDeadlinePopUp", "currentTaskId", "filterSelectionAll"],
@@ -45,11 +44,9 @@ export default {
       togglePopUp;
       this.editedDeadline = null ;
     },
-
   },
   setup() {
     const taskStore = useTaskStore();
-
     return { taskStore };
   },
 };

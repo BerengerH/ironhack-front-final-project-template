@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="addTask" class="my-16 mx-[5%] flex flex-col gap-2">
+    <form @submit.prevent="addTask" class="sm:my-16 my-12 mx-[5%] flex flex-col gap-2">
       <label for="new-task">Add a new task</label>
       <div class="flex flex-wrap sm:flex-nowrap gap-3">
         <input

@@ -63,23 +63,30 @@
         </thead>
 
         <tbody class="border border-black">
-          <EditTask
-            v-if="toggleEditTask"
-            :toggleTaskPopUp="toggleTaskPopUp"
-            :currentTaskId="this.currentTaskId"
-            :filterSelectionAll="this.filterSelectionAll"
-          />
-          <EditTaskStatus
-            v-if="toggleEditStatus"
-            :toggleStatusPopUp="toggleStatusPopUp"
-            :currentTaskId="this.currentTaskId"
-          />
-          <EditDeadline
-            v-if="toggleEditDeadline"
-            :toggleDeadlinePopUp="toggleDeadlinePopUp"
-            :currentTaskId="this.currentTaskId"
-            :filterSelectionAll="this.filterSelectionAll"
-          />
+          <tr>
+            <td v-if="toggleEditTask">
+              <EditTask
+                :toggleTaskPopUp="toggleTaskPopUp"
+                :currentTaskId="this.currentTaskId"
+                :filterSelectionAll="this.filterSelectionAll"
+              />
+            </td>
+            <td v-if="toggleEditStatus">
+              <EditTaskStatus
+                :toggleStatusPopUp="toggleStatusPopUp"
+                :currentTaskId="this.currentTaskId"
+                :filterSelectionAll="this.filterSelectionAll"
+              />
+            </td>
+            <td v-if="toggleEditDeadline">
+              <EditDeadline
+                :toggleDeadlinePopUp="toggleDeadlinePopUp"
+                :currentTaskId="this.currentTaskId"
+                :filterSelectionAll="this.filterSelectionAll"
+              />
+            </td>
+          </tr>
+
           <tr
             v-for="(filteredTask, index) in this.taskStore.filteredTasks"
             class="text-center"

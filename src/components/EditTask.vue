@@ -1,8 +1,8 @@
 <template>
   <div>
     <form
-      @submit.prevent="editTask(currentTaskId, toggleTaskPopUp())"
-      class="sticky bg-white flex flex-col items-center w-full"
+      @submit.prevent="editTask(currentTaskId, toggleTaskPopUp()), filterSelectionAll()"
+      class="bg-white flex flex-col items-center"
     >
       <label for="edit-task" class="p-5">Edit your task</label>
       <input
