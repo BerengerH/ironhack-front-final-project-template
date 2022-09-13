@@ -67,6 +67,7 @@
             v-if="toggleEditTask"
             :toggleTaskPopUp="toggleTaskPopUp"
             :currentTaskId="this.currentTaskId"
+            :filterSelectionAll="this.filterSelectionAll"
           />
           <EditTaskStatus
             v-if="toggleEditStatus"
@@ -77,6 +78,7 @@
             v-if="toggleEditDeadline"
             :toggleDeadlinePopUp="toggleDeadlinePopUp"
             :currentTaskId="this.currentTaskId"
+            :filterSelectionAll="this.filterSelectionAll"
           />
           <tr
             v-for="(filteredTask, index) in this.taskStore.filteredTasks"
@@ -159,15 +161,23 @@ export default {
       this.toggleEditDeadline = !this.toggleEditDeadline;
     },
 
+    //Method to toogle back filter to all after editing or deleting a task
+    filterSelectionAll() {
+      this.filterSelection = "all";
+    },
+
     //Method to get the task id
     getCurrentId(value) {
       this.currentTaskId = value;
     },
+
     //Method to delete a task
     async trash() {
       await this.taskStore.deleteTask(this.currentTaskId);
+      this.filterSelectionAll();
     },
-    //Function to filter tasks
+
+    //Method to filter tasks
     async filteredTasks() {
       await this.getTasks();
       if (this.filterSelection !== "all") {

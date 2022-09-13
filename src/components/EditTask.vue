@@ -33,7 +33,7 @@
 import { useTaskStore } from "../store/task";
 export default {
   name: "EditTask",
-  props: ["toggleTaskPopUp", "currentTaskId"],
+  props: ["toggleTaskPopUp", "currentTaskId", "filterSelectionAll"],
   data() {
     return {
       editedTitle: "",
